@@ -7,6 +7,8 @@ void ofApp::setup(){
     
     gui.setup("Dynamograma"); // most of the time you don't need a name but don't forget to call setup
     
+    gui.add(fullScreenButton.setup("fullscreen"));
+    
     positionParams.setName("POSITION");
     positionParams.add(center.set("center",ofVec2f(0.5,0.5),ofVec2f(0,0),ofVec2f(1,1)));
     positionParams.add(flipX.set("flip X", true));
@@ -19,20 +21,18 @@ void ofApp::setup(){
     lineParams.add(color.set("color",ofColor(255,255,255),ofColor(0,0),ofColor(255,255)));
     lineParams.add(drawLines.set("draw lines",true));
     lineParams.add(drawPoints.set("draw points",true));
-    lineParams.add(pointCount.set("adjust point count",50,10,200));
+    lineParams.add(pointCount.set("adjust point count",50,10,800));
     gui.add(lineParams);
-    
-    inputParams.setName("INPUT");
-    gui.add(inputParams);
-    gui.add(textField.setup("TEXT", " "));
-    gui.add(clearFrameButton.setup("clear frame"));
     
     textParams.setName("TEXT PARAMETERS");
     textParams.add(fontSize.set("font size", 0.5, 0, 1));
     textParams.add(kerning.set("kerning", 0.1, 0, 0.2));
     gui.add(textParams);
     
-    gui.add(fullScreenButton.setup("fullscreen"));
+    inputParams.setName("INPUT");
+    gui.add(inputParams);
+    gui.add(clearFrameButton.setup("clear frame"));
+    gui.add(textField.setup("TEXT", " "));
     
     clearFrameButton.addListener(this,&ofApp::clearIldaFrame);
     fullScreenButton.addListener(this,&ofApp::toggleFullScreen);
@@ -43,6 +43,7 @@ void ofApp::setup(){
     currentCenter = center.get();
     currentFontSize = fontSize.get();
     currentKerning = kerning.get();
+    currentColor = color.get();
     
     #ifdef DEBUG
     etherdream.setup();
@@ -70,12 +71,9 @@ void ofApp::toggleFullScreen() {
 }
 
 void ofApp::clearIldaFrame() {
+    textField.getParameter().fromString("");
+    //gui.add(textField.setup("TEXT", " "));
     ildaFrame.clear();
-}
-
-
-void ofApp::guiChanged() {
-    
 }
 
 void ofApp::updateIldaParameters() {
@@ -113,6 +111,17 @@ void ofApp::draw(){
     updateIldaParameters();
     
     // check if parameters changed
+    
+    if (center.get().x != currentCenter.x || center.get().y != currentCenter.y ||
+        fontSize.get() != currentFontSize || kerning.get() != currentKerning ||
+        color.get().r != currentColor.r || color.get().g != currentColor.g || color.get().b != currentColor.b) {
+        currentCenter = center.get();
+        currentFontSize = fontSize.get();
+        currentKerning = kerning.get();
+        currentColor = color.get();
+        drawIldaText();
+    }
+    
     if (textField.getParameter().toString().compare(currentText) != 0) {
         // String changed
         currentText = textField.getParameter().toString();
@@ -132,17 +141,17 @@ void ofApp::draw(){
 void ofApp::drawIldaText() {
     string v = currentText;
     ildaFrame.clear();
-    float fontScale =fontSize.get()/100;
+    float fontScale =currentFontSize/100;
     
     //calculate total width of string
     float totalWidth = 0;
     for (int i = 0;i<v.size();i++) {
         totalWidth += futural_realwidth[v.at(i)-32];
     }
-    totalWidth = totalWidth*fontScale+kerning.get()*(v.size()-1);
+    totalWidth = totalWidth*fontScale+currentKerning*(v.size()-1);
     
     // start letter routine;
-    float letterOffset = center.get().x-totalWidth/2;
+    float letterOffset = currentCenter.x-totalWidth/2;
     for (int i = 0;i<v.size();i++) {
         int letter_index = v.at(i)-32;
         
@@ -154,75 +163,21 @@ void ofApp::drawIldaText() {
         
         for (int i = 0;i<letter_size;i+=4) {
             ildaFrame.addPoly();
-            ildaFrame.getLastPoly().lineTo(float(letter_points[i])*fontScale+letterOffset,float(letter_points[i+1])*fontScale+center.get().y);
-            ildaFrame.getLastPoly().lineTo(float(letter_points[i+2])*fontScale+letterOffset,float(letter_points[i+3])*fontScale+center.get().y);
+            ildaFrame.getLastPoly().lineTo(float(letter_points[i])*fontScale+letterOffset,float(letter_points[i+1])*fontScale+currentCenter.y);
+            ildaFrame.getLastPoly().lineTo(float(letter_points[i+2])*fontScale+letterOffset,float(letter_points[i+3])*fontScale+currentCenter.y);
         }
-        letterOffset += letter_realwidth*fontScale+kerning.get();
+        letterOffset += letter_realwidth*fontScale+currentKerning;
     }
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
     switch(key) {
-        // draw rectangle
-        case 'r': {
-            ofPolyline p = ofPolyline::fromRectangle(ofRectangle(ofRandomuf()/2, ofRandomuf()/2, ofRandomuf()/2, ofRandomuf()/2));
-            ildaFrame.addPoly(p);
-        }
-            break;
-            
         case 'C': ildaFrame.drawCalibration(); break;
     }
 }
 
 //--------------------------------------------------------------
-void ofApp::keyReleased(int key){
-    
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseMoved(int x, int y ){
-    
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseDragged(int x, int y, int button){
-    // draw a line to the mouse cursor (normalized coordinates) in the last poly created
-    //ildaFrame.getLastPoly().lineTo(x / (float)ofGetWidth(), y / (float)ofGetHeight());
-}
-
-//--------------------------------------------------------------
-void ofApp::mousePressed(int x, int y, int button){
-    // create a new poly in the ILDA frame
-    //ildaFrame.addPoly();
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseReleased(int x, int y, int button){
-    
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseEntered(int x, int y){
-    
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseExited(int x, int y){
-    
-}
-
-//--------------------------------------------------------------
 void ofApp::windowResized(int w, int h){
-    //screenSize = ofToString(w) + "x" + ofToString(h);
-}
-
-//--------------------------------------------------------------
-void ofApp::gotMessage(ofMessage msg){
-    
-}
-
-//--------------------------------------------------------------
-void ofApp::dragEvent(ofDragInfo dragInfo){ 
     
 }

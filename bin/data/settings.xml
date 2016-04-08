@@ -1,22 +1,22 @@
 <Dynamograma>
 	<POSITION>
-		<center>0.5, 0.406497</center>
+		<center>0.500208, 0.437734</center>
 		<flip_X>1</flip_X>
 		<flip_Y>1</flip_Y>
-		<cap_X>1</cap_X>
-		<cap_Y>1</cap_Y>
+		<cap_X>0</cap_X>
+		<cap_Y>0</cap_Y>
 	</POSITION>
 	<LINE_PARAMETERS>
-		<color>255, 255, 255, 255</color>
+		<color>167, 179, 158, 255</color>
 		<draw_lines>1</draw_lines>
-		<draw_points>1</draw_points>
-		<adjust_point_count>197</adjust_point_count>
+		<draw_points>0</draw_points>
+		<adjust_point_count>501</adjust_point_count>
 	</LINE_PARAMETERS>
 	<INPUT/>
-	<TEXT>decomposer</TEXT>
+	<TEXT/>
 	<TEXT_PARAMETERS>
-		<font_size>0.464286</font_size>
-	<kerning>0.0183673</kerning>
+		<font_size>0.336735</font_size>
+	<kerning>0.0173469</kerning>
 	</TEXT_PARAMETERS>
 <Dynamograma/>
 </Dynamograma>

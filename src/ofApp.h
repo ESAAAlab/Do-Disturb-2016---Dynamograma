@@ -13,24 +13,13 @@ class ofApp : public ofBaseApp{
 		void update();
 		void draw();
         void exit();
-    
-        void updateIldaParameters();
-
+        
 		void keyPressed(int key);
-		void keyReleased(int key);
-		void mouseMoved(int x, int y );
-		void mouseDragged(int x, int y, int button);
-		void mousePressed(int x, int y, int button);
-		void mouseReleased(int x, int y, int button);
-		void mouseEntered(int x, int y);
-		void mouseExited(int x, int y);
 		void windowResized(int w, int h);
-		void dragEvent(ofDragInfo dragInfo);
-		void gotMessage(ofMessage msg);
+		void toggleFullScreen();
         void clearIldaFrame();
-        void toggleFullScreen();
+        void updateIldaParameters();
         void drawIldaText();
-        void guiChanged();
     
         ofParameterGroup positionParams;
         ofParameterGroup lineParams;
@@ -62,5 +51,5 @@ class ofApp : public ofBaseApp{
         float currentFontSize;
         float currentKerning;
         ofVec2f currentCenter;
-
+        ofColor currentColor;
 };
