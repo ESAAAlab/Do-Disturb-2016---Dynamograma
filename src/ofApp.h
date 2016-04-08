@@ -29,10 +29,8 @@ class ofApp : public ofBaseApp{
 		void gotMessage(ofMessage msg);
         void clearIldaFrame();
         void toggleFullScreen();
-        void textFieldListener(ofEventArgs& e);
         void drawIldaText();
-    
-        bool bHide;
+        void guiChanged();
     
         ofParameterGroup positionParams;
         ofParameterGroup lineParams;
@@ -50,6 +48,7 @@ class ofApp : public ofBaseApp{
         ofxButton fullScreenButton;
         ofParameter<ofColor> color;
         ofParameter<float> fontSize;
+        ofParameter<float> kerning;
         ofParameter<int> pointCount;
         ofxTextField textField;
     
@@ -59,4 +58,9 @@ class ofApp : public ofBaseApp{
         ofxEtherdream etherdream;   // interface to the etherdream device
     
         float frameScale = 0.9;
+        string currentText;
+        float currentFontSize;
+        float currentKerning;
+        ofVec2f currentCenter;
+
 };

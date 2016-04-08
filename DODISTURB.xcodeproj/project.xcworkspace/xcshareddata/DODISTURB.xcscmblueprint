@@ -1,0 +1,36 @@
+{
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "422C9064AB1F96D61C530E0415B826167B33B3A9" : 0,
+    "C1E8919E75191C5A81309888FBBC5793267330D8" : 0,
+    "F71958031D205D2C5B7FC71EE73A2878789BBF46" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "9671C215-8BD3-40DF-B71F-A3E5B939ED0C",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "422C9064AB1F96D61C530E0415B826167B33B3A9" : "oF\/addons\/ofxInputField\/",
+    "C1E8919E75191C5A81309888FBBC5793267330D8" : "oF\/addons\/ofxEtherdream\/",
+    "F71958031D205D2C5B7FC71EE73A2878789BBF46" : "oF\/addons\/ofxIlda\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "DODISTURB",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "DODISTURB.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/fx-lange\/ofxInputField.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "422C9064AB1F96D61C530E0415B826167B33B3A9"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/memo\/ofxEtherdream.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "C1E8919E75191C5A81309888FBBC5793267330D8"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/memo\/ofxIlda.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "F71958031D205D2C5B7FC71EE73A2878789BBF46"
+    }
+  ]
+}

@@ -29,29 +29,34 @@ void ofApp::setup(){
     
     textParams.setName("TEXT PARAMETERS");
     textParams.add(fontSize.set("font size", 0.5, 0, 1));
+    textParams.add(kerning.set("kerning", 0.1, 0, 0.2));
     gui.add(textParams);
     
     gui.add(fullScreenButton.setup("fullscreen"));
     
-    bHide = false;
-    
     clearFrameButton.addListener(this,&ofApp::clearIldaFrame);
     fullScreenButton.addListener(this,&ofApp::toggleFullScreen);
-    textField.addListener(this,&ofApp::textFieldListener);
     
     gui.loadFromFile("settings.xml");
+    
+    currentText = textField.getParameter().toString();
+    currentCenter = center.get();
+    currentFontSize = fontSize.get();
+    currentKerning = kerning.get();
     
     #ifdef DEBUG
     etherdream.setup();
     etherdream.setPPS(30000);
     #endif
+    
+    updateIldaParameters();
+    drawIldaText();
 }
 
 //--------------------------------------------------------------
 void ofApp::exit(){
     clearFrameButton.removeListener(this,&ofApp::clearIldaFrame);
     fullScreenButton.removeListener(this,&ofApp::toggleFullScreen);
-    //textField.removeListener(this,&ofApp::textFieldListener);
     gui.saveToFile("settings.xml");
 }
 
@@ -68,8 +73,9 @@ void ofApp::clearIldaFrame() {
     ildaFrame.clear();
 }
 
-void ofApp::textFieldListener(ofEventArgs& e) {
-    ofLog(OF_LOG_NOTICE, "textfield changed");
+
+void ofApp::guiChanged() {
+    
 }
 
 void ofApp::updateIldaParameters() {
@@ -96,14 +102,22 @@ void ofApp::draw(){
     ofSetColor(50, 160, 255);
     
     ofDrawRectangle(ofGetWidth()/2-ofGetHeight()*frameScale/2, ofGetHeight()/2-ofGetHeight()*frameScale/2, ofGetHeight()*frameScale, ofGetHeight()*frameScale);
-    
+    ofSetLineWidth(0.5);
+    ofDrawLine(ofGetWidth()/2, ofGetHeight()/2-ofGetHeight()*frameScale/2, ofGetWidth()/2, ofGetHeight()/2+ofGetHeight()*frameScale/2);
+    ofDrawLine(ofGetWidth()/2-ofGetHeight()*frameScale/2, ofGetHeight()/2,ofGetWidth()/2+ofGetHeight()*frameScale/2, ofGetHeight()/2);
     ofSetColor(color);
     ofSetLineWidth(2);
     
-    ofLog(OF_LOG_NOTICE, textField.getParameter().toString());
-    
 #pragma mark ILDA DRAWING
+
     updateIldaParameters();
+    
+    // check if parameters changed
+    if (textField.getParameter().toString().compare(currentText) != 0) {
+        // String changed
+        currentText = textField.getParameter().toString();
+        drawIldaText();
+    }
     
     ildaFrame.update();
     ildaFrame.draw(ofGetWidth()/2-ofGetHeight()*frameScale/2, ofGetHeight()/2-ofGetHeight()*frameScale/2, ofGetHeight()*frameScale, ofGetHeight()*frameScale);
@@ -111,37 +125,44 @@ void ofApp::draw(){
     #ifdef DEBUG
     etherdream.setPoints(ildaFrame);
     #endif
-    //ofSetColor(255);
-    //ofDrawBitmapString(ildaFrame.getString(), 10, 30);
     
-    if( !bHide ){
-        gui.draw();
-    }
+    gui.draw();
 }
 
 void ofApp::drawIldaText() {
-    int letter_index = 37;
-    
-    int letter_size = futural_size[letter_index];
-    int letter_width = futural_width[letter_index];
-    int letter_realwidth = futural_realwidth[letter_index];
-    int letter_height = futural_height;
-    const int *letter_points = futural[letter_index];
-    
+    string v = currentText;
     ildaFrame.clear();
-    for (int i = 0;i<letter_size;i+=4) {
-        ildaFrame.addPoly();
-        ildaFrame.getLastPoly().lineTo(float(letter_points[i])*fontSize.get()/100,float(letter_points[i+1])*fontSize.get()/100);
-        ildaFrame.getLastPoly().lineTo(float(letter_points[i+2])*fontSize.get()/100,float(letter_points[i+3])*fontSize.get()/100);
+    float fontScale =fontSize.get()/100;
+    
+    //calculate total width of string
+    float totalWidth = 0;
+    for (int i = 0;i<v.size();i++) {
+        totalWidth += futural_realwidth[v.at(i)-32];
+    }
+    totalWidth = totalWidth*fontScale+kerning.get()*(v.size()-1);
+    
+    // start letter routine;
+    float letterOffset = center.get().x-totalWidth/2;
+    for (int i = 0;i<v.size();i++) {
+        int letter_index = v.at(i)-32;
+        
+        int letter_size = futural_size[letter_index];
+        int letter_width = futural_width[letter_index];
+        int letter_realwidth = futural_realwidth[letter_index];
+        int letter_height = futural_height;
+        const int *letter_points = futural[letter_index];
+        
+        for (int i = 0;i<letter_size;i+=4) {
+            ildaFrame.addPoly();
+            ildaFrame.getLastPoly().lineTo(float(letter_points[i])*fontScale+letterOffset,float(letter_points[i+1])*fontScale+center.get().y);
+            ildaFrame.getLastPoly().lineTo(float(letter_points[i+2])*fontScale+letterOffset,float(letter_points[i+3])*fontScale+center.get().y);
+        }
+        letterOffset += letter_realwidth*fontScale+kerning.get();
     }
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-    if( key == 'h' ){
-        bHide = !bHide;
-    }
-    
     switch(key) {
         // draw rectangle
         case 'r': {
