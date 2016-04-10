@@ -6,9 +6,12 @@
 #include "ofxEtherdream.h"
 #include "ofxInputField.h"
 
-class ofApp : public ofBaseApp{
+class ofApp : public ofBaseApp {
 
 	public:
+    
+        vector<string> sentences;
+    
 		void setup();
 		void update();
 		void draw();
@@ -20,6 +23,7 @@ class ofApp : public ofBaseApp{
         void clearIldaFrame();
         void updateIldaParameters();
         void drawIldaText();
+        void switchText(int sentenceIndex, int wordIndex);
     
         ofParameterGroup positionParams;
         ofParameterGroup lineParams;
@@ -52,4 +56,6 @@ class ofApp : public ofBaseApp{
         float currentKerning;
         ofVec2f currentCenter;
         ofColor currentColor;
+        int currentSentence;
+        int currentWord;
 };

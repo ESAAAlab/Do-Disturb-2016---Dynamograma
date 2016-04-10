@@ -5,7 +5,50 @@
 void ofApp::setup(){
     ofSetVerticalSync(true);
     
-    gui.setup("Dynamograma"); // most of the time you don't need a name but don't forget to call setup
+    sentences.reserve(38);
+    sentences.push_back("DYNAMOGRAMA");
+    sentences.push_back("ECHANTILLONER");
+    sentences.push_back("BOUTON SAMBA PROBABLEMENT");
+    sentences.push_back("SPIDERMAN");
+    sentences.push_back("NANANI NANA");
+    sentences.push_back("CYNIQUE");
+    sentences.push_back("TRAUMA ORDINAIRE");
+    sentences.push_back("EFFACER L'HISTORIQUE");
+    sentences.push_back("TEMPS HISTORIQUE");
+    sentences.push_back("SIGNAL");
+    sentences.push_back("MONDE SANS NOUS");
+    sentences.push_back("NOUS SANS MONDE");
+    sentences.push_back("4.5 MILLIARDS D'ANNEES");
+    sentences.push_back("10 MILLIARDS D'ANNEES");
+    sentences.push_back("PROBLEME DE L'ANCESTRALITE");
+    sentences.push_back("TEMPS GEOLOGIQUES");
+    sentences.push_back("PERSONNE DANS L'OEIL DU CYCLONE");
+    sentences.push_back("LES DIEUX");
+    sentences.push_back("LES LIEUX");
+    sentences.push_back("LES FOSSILES");
+    sentences.push_back("FUSION");
+    sentences.push_back("AMIBES");
+    sentences.push_back("BACTERIES");
+    sentences.push_back("SIGNE");
+    sentences.push_back("DRONE");
+    sentences.push_back("ECHELLE MOLECULAIRE");
+    sentences.push_back("RELATION MEDIATIQUE");
+    sentences.push_back("MEDIAS DU MONDE");
+    sentences.push_back("SELFIE");
+    sentences.push_back("CONNEXION");
+    sentences.push_back("MIROIR");
+    sentences.push_back("OBJET");
+    sentences.push_back("SUJET");
+    sentences.push_back("IMAGE");
+    sentences.push_back("METAXU");
+    sentences.push_back("NOS ANCETRES LES COMETES");
+    sentences.push_back("----------");
+    sentences.push_back("DYNAMOGRAMA");
+    
+    currentSentence = -1;
+    currentWord = 0;
+    
+    gui.setup("Dynamograma");
     
     gui.add(fullScreenButton.setup("fullscreen"));
     
@@ -39,16 +82,16 @@ void ofApp::setup(){
     
     gui.loadFromFile("settings.xml");
     
+    textField.getParameter().fromString("");
+    
     currentText = textField.getParameter().toString();
     currentCenter = center.get();
     currentFontSize = fontSize.get();
     currentKerning = kerning.get();
     currentColor = color.get();
     
-    #ifdef DEBUG
-    etherdream.setup();
-    etherdream.setPPS(30000);
-    #endif
+    //etherdream.setup();
+    //etherdream.setPPS(30000);
     
     updateIldaParameters();
     drawIldaText();
@@ -91,6 +134,13 @@ void ofApp::updateIldaParameters() {
      ildaFrame.params.output.transform.scale.x*/
 }
 
+void ofApp::switchText(int sentenceIndex, int wordIndex) {
+    string v = sentences.at(sentenceIndex);
+    istringstream iss(v);
+    vector<string> tokens{istream_iterator<string>{iss}, istream_iterator<string>{}};
+    textField.getParameter().fromString(tokens.at(wordIndex));
+}
+
 //--------------------------------------------------------------
 void ofApp::draw(){
     ofBackground(0,0,0);
@@ -131,9 +181,7 @@ void ofApp::draw(){
     ildaFrame.update();
     ildaFrame.draw(ofGetWidth()/2-ofGetHeight()*frameScale/2, ofGetHeight()/2-ofGetHeight()*frameScale/2, ofGetHeight()*frameScale, ofGetHeight()*frameScale);
     
-    #ifdef DEBUG
-    etherdream.setPoints(ildaFrame);
-    #endif
+    //etherdream.setPoints(ildaFrame);
     
     gui.draw();
 }
@@ -174,6 +222,36 @@ void ofApp::drawIldaText() {
 void ofApp::keyPressed(int key){
     switch(key) {
         case 'C': ildaFrame.drawCalibration(); break;
+        case 'a' :
+            if (currentSentence+1 < sentences.size()) {
+                currentSentence++;
+            } else {
+                currentSentence = 0;
+            }
+            currentWord = 0;
+            switchText(currentSentence,currentWord);
+            break;
+        case 'q' :
+            if (currentSentence > 0) {
+                currentSentence--;
+            } else {
+                currentSentence = sentences.size()-1;
+            }
+            currentWord = 0;
+            switchText(currentSentence,currentWord);
+            break;
+        case 'z':
+            string v = sentences.at(currentSentence);
+            istringstream iss(v);
+            vector<string> tokens{istream_iterator<string>{iss}, istream_iterator<string>{}};
+            if (currentWord+1 < tokens.size()) {
+                currentWord++;
+            } else {
+                currentWord = 0;
+            }
+            switchText(currentSentence,currentWord);
+            break;
+        //case 'b': switchText(currentSentence,currentWord); break;
     }
 }
 

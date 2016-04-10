@@ -1,17 +1,20 @@
 {
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "7A6F6F75528A77C7C9C7CF21F2BD9E67E85B9E65",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
 
   },
   "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
-    "422C9064AB1F96D61C530E0415B826167B33B3A9" : 0,
+    "7A6F6F75528A77C7C9C7CF21F2BD9E67E85B9E65" : 0,
     "C1E8919E75191C5A81309888FBBC5793267330D8" : 0,
-    "F71958031D205D2C5B7FC71EE73A2878789BBF46" : 0
+    "F71958031D205D2C5B7FC71EE73A2878789BBF46" : 0,
+    "422C9064AB1F96D61C530E0415B826167B33B3A9" : 0
   },
-  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "9671C215-8BD3-40DF-B71F-A3E5B939ED0C",
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "8299E0F6-23E2-4680-A644-EDF74BE78E1D",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
-    "422C9064AB1F96D61C530E0415B826167B33B3A9" : "oF\/addons\/ofxInputField\/",
+    "7A6F6F75528A77C7C9C7CF21F2BD9E67E85B9E65" : "DODISTURB\/",
     "C1E8919E75191C5A81309888FBBC5793267330D8" : "oF\/addons\/ofxEtherdream\/",
-    "F71958031D205D2C5B7FC71EE73A2878789BBF46" : "oF\/addons\/ofxIlda\/"
+    "F71958031D205D2C5B7FC71EE73A2878789BBF46" : "oF\/addons\/ofxIlda\/",
+    "422C9064AB1F96D61C530E0415B826167B33B3A9" : "oF\/addons\/ofxInputField\/"
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "DODISTURB",
   "DVTSourceControlWorkspaceBlueprintVersion" : 204,
@@ -21,6 +24,11 @@
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/fx-lange\/ofxInputField.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "422C9064AB1F96D61C530E0415B826167B33B3A9"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:ESAAAlab\/Do-Disturb-2016---Dynamograma.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "7A6F6F75528A77C7C9C7CF21F2BD9E67E85B9E65"
     },
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/memo\/ofxEtherdream.git",
